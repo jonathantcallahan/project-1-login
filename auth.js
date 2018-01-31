@@ -2,7 +2,7 @@ firebase.initializeApp(config);
 
 const auth = firebase.auth();
 
-let uid = "";
+var uid = "";
 
 const authentication = {
     inputEmail: $("#email"),
