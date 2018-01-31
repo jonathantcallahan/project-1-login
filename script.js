@@ -3,60 +3,12 @@ firebase.initializeApp(config);
 var userStorage = firebase.database().ref("user-storage")
 
 
-/*
-// The following code is for firebase authentication/login
-var provider = new firebase.auth.GithubAuthProvider();
-/*
-ui.start('#firebaseui-auth-container', {
-    signInOptions =[
-        // List of OAuth providers supported.
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.GithubAuthProvider.PROVIDER_ID
-    ],
-    // Other config options...
-});
+//Authentication 
 
 
- initApp = function() {
-        firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var uid = user.uid;
-            var phoneNumber = user.phoneNumber;
-            var providerData = user.providerData;
-            user.getIdToken().then(function(accessToken) {
-              document.getElementById('sign-in-status').textContent = 'Signed in';
-              document.getElementById('sign-in').textContent = 'Sign out';
-              document.getElementById('account-details').textContent = JSON.stringify({
-                displayName: displayName,
-                email: email,
-                emailVerified: emailVerified,
-                phoneNumber: phoneNumber,
-                photoURL: photoURL,
-                uid: uid,
-                accessToken: accessToken,
-                providerData: providerData
-              }, null, '  ');
-            });
-          } else {
-            // User is signed out.
-            document.getElementById('sign-in-status').textContent = 'Signed out';
-            document.getElementById('sign-in').textContent = 'Sign in';
-            document.getElementById('account-details').textContent = 'null';
-          }
-        }, function(error) {
-          console.log(error);
-        });
-      };
 
-      window.addEventListener('load', function() {
-        initApp()
-});
-*/
+//End Auth Code
+
 var app = {
     isRunning: false,
     fullMessage: "",
@@ -105,11 +57,7 @@ var api = {
     callHistory: function (month, day, userName) {
 
         var queryUrl = "https://cors-anywhere.herokuapp.com/" + "http://history.muffinlabs.com/date/" + month + "/" + day
-        // $.ajaxPrefilter(function (options) {
-        //     if (options.crossDomain && jQuery.support.cors) {
-        //         options.url = "https://cors-anywhere.herokuapp.com/" + options.url;
-        //     }
-        // })
+
         $.ajax({
             url: queryUrl,
             method: "GET"
@@ -128,29 +76,24 @@ var api = {
             api.historyText = ("Hi " + userName + ", In the year " + yearOccur + " on the day you were born " + text)
             console.log(api.historyText, api.nameText)
             app.typewriter(api.historyText,api.nameText)
-
-        
-            // var p = $("<p>")
-            //p.text("Hi " + userName + ", In the year " + yearOccur + " on the day you were born " + text)
-            //$("#results-container").append(p)
         })
     }
 }
 
-  userStorage.on("child_added",function(snapshot){
-        var div = $("<div>")
-        var p = $("<p>")
-        var span = $("<span>").text("X")
-        span.attr("key",snapshot.key)
-        span.attr("class","remove")
-        p.html(snapshot.val().name + " " + snapshot.val().dobMonth + "/" + snapshot.val().dobDay + "/" + snapshot.val().dobYear)
-        p.attr("class", "user-button")
-        p.attr("name", snapshot.val().name)
-        p.attr("day",snapshot.val().dobDay)
-        p.attr("month",snapshot.val().dobMonth)
-        div.append(p,span)
-        div.attr("class","button-holder")
-        $("#button-container").append(div)
+userStorage.on("child_added",function(snapshot){
+    var div = $("<div>")
+    var p = $("<p>")
+    var span = $("<span>").text("X")
+    span.attr("key",snapshot.key)
+    span.attr("class","remove")
+    p.html(snapshot.val().name + " " + snapshot.val().dobMonth + "/" + snapshot.val().dobDay + "/" + snapshot.val().dobYear)
+    p.attr("class", "user-button")
+    p.attr("name", snapshot.val().name)
+    p.attr("day",snapshot.val().dobDay)
+    p.attr("month",snapshot.val().dobMonth)
+    div.append(p,span)
+    div.attr("class","button-holder")
+    $("#button-container").append(div)
     },
     function(errData){
         console.log("Unable to retreive data")
@@ -188,9 +131,7 @@ document.onkeydown = function(event){
             dobMonth: userDobMonth,
             dobYear: userDobYear
         })
-
         api.callNameAPI(userName);
         api.callHistory(userDobMonth, userDobDay, userName);
-
     }
 }
