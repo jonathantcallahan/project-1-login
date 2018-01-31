@@ -1,13 +1,8 @@
-firebase.initializeApp(config);
+
 
 var userStorage = firebase.database().ref("user-storage")
 
-
-//Authentication 
-
-
-
-//End Auth Code
+console.log(uid)
 
 var app = {
     isRunning: false,
