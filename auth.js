@@ -12,7 +12,7 @@ const authentication = {
     */
 };
 
-$(logBtn).click(e => {
+$(authentication.logBtn).click(e => {
     const email = authentication.inputEmail.val();
     const pass = authentication.inputPass.val();
 
