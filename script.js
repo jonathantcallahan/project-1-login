@@ -19,6 +19,7 @@ const authentication = {
 
 $("#signout-button").click(e => {
     auth.signOut()
+    location.reload()
     $("#signout-button").css("visibility","hidden")
 })
 
@@ -40,6 +41,8 @@ $(authentication.signBtn).click(e => {
     const promise = auth.createUserWithEmailAndPassword(email, pass);
     promise.catch(e => console.log(e.message));
     $("#signout-button").css("visibility","visible")
+
+
 })
 
 auth.onAuthStateChanged(firebaseUser => {
@@ -60,16 +63,29 @@ auth.onAuthStateChanged(firebaseUser => {
 //end user auth
 
 var userStorage = firebase.database().ref("user-storage")
+var time = 0;
 
 function setUser() {
+    
     if(uid){
         userStorage = firebase.database().ref("user-storage/" + uid)
         console.log("uid ran")
+        checkChild();
+
     } else {
-        setTimeout(setUser, 1)
+        time++;
+        var setUserTimer = setTimeout(setUser, 5)
         console.log("set user else")
+        console.log(time)
+        if(time>420){
+            clearTimeout(setUserTimer)
+            console.log("timer ran outd")
+            checkChild();
+            return;
+        }
     }
 }
+setUser()
 
 
 
@@ -146,25 +162,27 @@ var api = {
     }
 }
 
-userStorage.on("child_added",function(snapshot){
-    var div = $("<div>")
-    var p = $("<p>")
-    var span = $("<span>").text("X")
-    span.attr("key",snapshot.key)
-    span.attr("class","remove")
-    p.html(snapshot.val().name + " " + snapshot.val().dobMonth + "/" + snapshot.val().dobDay + "/" + snapshot.val().dobYear)
-    p.attr("class", "user-button")
-    p.attr("name", snapshot.val().name)
-    p.attr("day",snapshot.val().dobDay)
-    p.attr("month",snapshot.val().dobMonth)
-    div.append(p,span)
-    div.attr("class","button-holder")
-    $("#button-container").append(div)
-    },
-    function(errData){
-        console.log("Unable to retreive data")
-    }
-)
+function checkChild(){
+    userStorage.on("child_added",function(snapshot){
+        var div = $("<div>")
+        var p = $("<p>")
+        var span = $("<span>").text("X")
+        span.attr("key",snapshot.key)
+        span.attr("class","remove")
+        p.html(snapshot.val().name + " " + snapshot.val().dobMonth + "/" + snapshot.val().dobDay + "/" + snapshot.val().dobYear)
+        p.attr("class", "user-button")
+        p.attr("name", snapshot.val().name)
+        p.attr("day",snapshot.val().dobDay)
+        p.attr("month",snapshot.val().dobMonth)
+        div.append(p,span)
+        div.attr("class","button-holder")
+        $("#button-container").append(div)
+        },
+        function(errData){
+            console.log("Unable to retreive data")
+        }
+    )
+};    
 
 $(document).delegate(".remove", "click", function(){
     var key = $(this).attr("key");
