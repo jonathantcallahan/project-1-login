@@ -71,13 +71,12 @@ function setUser() {
         userStorage = firebase.database().ref("user-storage/" + uid)
         console.log("uid ran")
         checkChild();
-
     } else {
         time++;
         var setUserTimer = setTimeout(setUser, 5)
         console.log("set user else")
         console.log(time)
-        if(time>420){
+        if(time>250){
             clearTimeout(setUserTimer)
             console.log("timer ran outd")
             checkChild();
@@ -188,7 +187,8 @@ $(document).delegate(".remove", "click", function(){
     var key = $(this).attr("key");
     console.log(key)
     userStorage.child(key).remove()
-    $(this).parent().remove();
+    $(this).parent().slideToggle("slow")
+    var remove = setTimeout(() => $(this).parent().remove(), 1500);
 })
 
 $(document).delegate(".user-button","click",function(){

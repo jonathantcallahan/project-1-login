@@ -11,6 +11,8 @@
     <style>
         * {
             font-family: arial;
+            padding: 0px;
+            margin: 0px;
         }
 
         .user-button {
@@ -54,21 +56,52 @@
             visibility: hidden;
         }
 
+        header {
+            background: -webkit-gradient(linear, left top, left bottom, from(rgb(75, 58, 220)), to(palevioletred));
+            height: 40px;
+        }
+
+        .log-button {
+            display: inline-block;
+            background-color:white;
+            color: rgb(75, 58, 220);
+            padding: 2px 4px;
+            font-weight: lighter;
+            border-radius: 3px;
+        }
+
+        .log-button:hover {
+            box-shadow: 0px 2px 3px black;
+            background-color: aquamarine;
+            color: white;
+        }
+
+        #login-container {
+            padding: 8px 0px 0px 8px;
+        }
+
+        .top-input {
+            border: none;
+            height: 23px;
+            border-radius: 3px;
+            padding-left: 4px;
+        }
+
 
 
     </style>
 </head>
 
 <body>
-
-    <div id="login-container">
-        <input type="email" id="email" placeholder="email">
-        <input type="password" id="password" placeholder="password">
-        <div id="login-button">Log in</div>
-        <div id="signup-button">Sign Up</div>
-        <div id="signout-button">Sign Out</div>
-    </div>
-
+    <header>
+        <div id="login-container">
+            <input class="top-input" type="email" id="email" placeholder="email">
+            <input class="top-input" type="password" id="password" placeholder="password">
+            <div class="log-button" id="login-button">Log in</div>
+            <div class="log-button" id="signup-button">Sign Up</div>
+            <div class="log-button" id="signout-button">Sign Out</div>
+        </div>
+    </header>
     <div id="sentence-container">
         <h1>My name is
             <input type="text" id="name-input" required>. I was born on
