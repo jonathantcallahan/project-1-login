@@ -119,6 +119,7 @@ var app = {
             fullText = historyApiRes + WordsApiRes;
             console.log("else ran")
         }
+        fullText = fullText.toLocaleUpperCase()
         var typeTimer = setInterval(writeText, speed)
         function writeText(){ 
             if(i<fullText.length){
