@@ -56,15 +56,16 @@
             visibility: hidden;
         }
 
-        header {
-            background: -webkit-gradient(linear, left top, left bottom, from(rgb(75, 58, 220)), to(palevioletred));
+        #header {
+            background-color: palevioletred;
             height: 40px;
+ 
         }
 
         .log-button {
             display: inline-block;
             background-color:white;
-            color: rgb(75, 58, 220);
+            color: palevioletred;
             padding: 2px 4px;
             font-weight: lighter;
             border-radius: 3px;
@@ -87,13 +88,55 @@
             padding-left: 4px;
         }
 
+        .user-input {
+            border: none;
+            border-bottom: 2px black solid;
+            height: 25px;
+            background-color: none;
+            
+        }
 
+        #intro {
+            width: 100%;
+            height: 100%;
+            background-color: palevioletred;
+            text-align: center;
+        }
+
+        .top-screen-text {
+            padding: 50% 0px;
+            font-size: 100px;
+            font-weight: bolder;
+            color: white;
+            letter-spacing: 10px;
+        }
+
+        #sentence-container {
+            width: 50%;
+            margin: 30px 0px 0px 30px;
+        }
+
+        #saved-entries {
+            margin: 200px 0px 0px 0px;
+            padding-left: 30px;
+            padding-top: 30px;
+            background-color: palevioletred;
+            color: white;
+            font-size: 25px;
+            font-weight: 100;
+            height: 400px;
+
+        }
 
     </style>
 </head>
 
 <body>
-    <header>
+    <div id="intro">
+        <p class="top-screen-text">HELLO</p>
+    </div>
+    <a href="file:///C:/Users/Jonathan/bootcamp/project-1-auth/project-1-login/index.html#1"></a>
+    <div id="header">
         <div id="login-container">
             <input class="top-input" type="email" id="email" placeholder="email">
             <input class="top-input" type="password" id="password" placeholder="password">
@@ -101,16 +144,20 @@
             <div class="log-button" id="signup-button">Sign Up</div>
             <div class="log-button" id="signout-button">Sign Out</div>
         </div>
-    </header>
+    </div>
     <div id="sentence-container">
-        <h1>My name is
-            <input type="text" id="name-input" required>. I was born on
-            <input class="user-input" type="date" id="date" name="birthday" min="1800-04-01" max="2018-04-30" required>
+        <h1 id="name-enter">MY NAME IS
+            <input class="user-input" type="text" id="name-input" required>. 
+        </h1>
+        <h1 id="date-enter"> I WAS BORN ON
+            <input class="user-input" type="date" id="date" name="birthday" min="1800-04-01" max="2018-04-30" required>.
         </h1>
     </div>
     <div id="results-container"></div>
-    <h2>See what other users found</h2>
-    <div id="button-container"></div>
+    <div id="saved-entries">SAVED ENTRIES
+            <div id="button-container"></div>
+    </div>
+    
 
 
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>

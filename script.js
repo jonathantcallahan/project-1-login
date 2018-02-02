@@ -62,7 +62,11 @@ auth.onAuthStateChanged(firebaseUser => {
 
 //end user auth
 
-var userStorage = firebase.database().ref("user-storage")
+$(".top-input").click(function(){
+    $(this).attr("placeholder","")
+})
+
+var userStorage = firebase.database().ref("user-storage/notloggedin")
 var time = 0;
 
 function setUser() {
@@ -86,6 +90,15 @@ function setUser() {
 }
 setUser()
 
+function scroll(){
+    $(".top-screen-text").slideToggle("slow")
+}
+
+setTimeout(scroll, 1500)
+$("#name-enter").slideUp()
+$("#date-enter").slideUp()
+setTimeout(e => {$("#name-enter").slideDown()}, 2000)
+setTimeout(e => {$("#date-enter").slideDown()},2500)
 
 
 
