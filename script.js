@@ -3,6 +3,7 @@ firebase.initializeApp(config);
 const auth = firebase.auth();
 
 var uid = "";
+var uEmail = "";
 
 const authentication = {
     inputEmail: $("#email"),
@@ -31,6 +32,7 @@ $(authentication.logBtn).click(e => {
     promise.catch(e => console.log(e.message));
 
     $("#signout-button").css("visiblity","visible")
+    setTimeout(e => {setUser()}, 500)
 });
 
 $(authentication.signBtn).click(e => {
@@ -41,8 +43,7 @@ $(authentication.signBtn).click(e => {
     const promise = auth.createUserWithEmailAndPassword(email, pass);
     promise.catch(e => console.log(e.message));
     $("#signout-button").css("visibility","visible")
-
-
+    setTimeout(e => {setUser()}, 500);
 })
 
 auth.onAuthStateChanged(firebaseUser => {
@@ -52,6 +53,8 @@ auth.onAuthStateChanged(firebaseUser => {
         uid = firebaseUser.uid;
         console.log(uid)
         $("#signout-button").css("visibility","visible")
+        console.log(firebaseUser.email)
+        uEmail = firebaseUser.email;
         
 
 
@@ -74,7 +77,14 @@ function setUser() {
     if(uid){
         userStorage = firebase.database().ref("user-storage/" + uid)
         console.log("uid ran")
+        $(".top-input").css("display","none")
+        $(".in").css("display","none")
         checkChild();
+        var div = $("<div>")
+        div.text("Logged In As " + uEmail)
+        div.attr("class","log-button")
+        $("#login-container").prepend(div)
+
     } else {
         time++;
         var setUserTimer = setTimeout(setUser, 5)
